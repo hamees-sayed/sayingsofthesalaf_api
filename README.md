@@ -1,1 +1,1 @@
-Scrape athars from the site https://www.sayingsofthesalaf.net/ and expose an api to fetch them. [WIP]
+Scrape the narrations from the site https://www.sayingsofthesalaf.net/ and expose an api to fetch them. [WIP]
