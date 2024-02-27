@@ -1,1 +1,1 @@
-# sayingsofthesalaf_scraper
+Scrape athars from the site https://www.sayingsofthesalaf.net/ and expose an api to fetch them. [WIP]
