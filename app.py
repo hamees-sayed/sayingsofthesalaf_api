@@ -1,7 +1,7 @@
 import os
 import ast
 import unicodedata
-from flask import Flask, jsonify
+from flask import Flask, jsonify, render_template
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -39,7 +39,7 @@ def get_names():
             narrators_list.add(narrator)
     return sorted(list(narrators_list))
 
-def get_categories():
+def get_topics():
     """Get all categories from the database."""
     narrations = Narration.query.all()
     category_list = set()
@@ -54,8 +54,15 @@ def get_categories():
 def page_not_found(e):
     return jsonify({"error": "Not Found"}), 404
 
-# Get every narration
+# Home
 @app.route('/')
+def home():
+    topics = get_topics()
+    names = get_names()
+    return render_template("index.html", topics=topics, names=names, zip=zip, decode_unicode=decode_unicode)
+
+# Get every narration
+@app.route('/narrations', strict_slashes=False)
 def narrations():
     narrations = Narration.query.all()
     narrations_json = [{"id": narration.id, "articles": narration.articles, 
@@ -63,7 +70,7 @@ def narrations():
     return jsonify(narrations_json)
 
 # Get a specific narration by id
-@app.route('/<int:id>', strict_slashes=False)
+@app.route('/narration/<int:id>', strict_slashes=False)
 def athar(id):
     narration = Narration.query.get_or_404(id)
     narration_json = {"id": narration.id, "articles": narration.articles, 
@@ -73,13 +80,13 @@ def athar(id):
 # Get all categories
 @app.route('/topics', strict_slashes=False)
 def categories():
-    categories = get_categories()
+    categories = get_topics()
     return categories
 
 # Get a specific category by name
 @app.route('/topic/<string:category>', strict_slashes=False)
 def category(category):
-    categories_list = get_categories()
+    categories_list = get_topics()
     narrations = Narration.query.all()
     for cat in categories_list:
         if category == decode_unicode(cat):

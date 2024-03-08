@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        body {
+            padding: 25px;
+        }
+        
+        .parameters {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        #parameters {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+            <th>#</th>
+            <th>Method</th>
+            <th>Endpoint</th>
+            <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th>1. </th>
+          <td>GET</td>
+          <td>/narrations</td>
+          <td>All the narrations.</td>
+        </tr>
+        <tr>
+            <th>2. </th>
+            <td>GET</td>
+            <td>/narration/`int:id`</td>
+            <td>Narrations by a specific id.</td>
+          </tr>
+          <tr>
+            <th>3. </th>
+            <td>GET</td>
+            <td>/names</td>
+            <td>Names of the scholars.</td>
+          </tr>
+        <tr>
+            <th>4. </th>
+          <td>GET</td>
+          <td>/name/`string:name`</td>
+          <td>All the narrations by a specific scholar.</td>
+        </tr>
+        <tr>
+            <th>5. </th>
+            <td>GET</td>
+            <td>/topics</td>
+            <td>All the topics.</td>
+          </tr>
+          <tr>
+            <th>6. </th>
+            <td>GET</td>
+            <td>/topic/`string:topic`</td>
+            <td>All the narrations by a specific topic.</td>
+          </tr>
+        </tbody>
+      </table>
+      <br>
+      <h3>Example:</h3>
+      <ol>
+        <li><a href="https://sayingsofthesalaf-api.onrender.com/narrations" target="_blank">https://sayingsofthesalaf-api.onrender.com/narrations</a></li>
+        <li><a href="https://sayingsofthesalaf-api.onrender.com/narration/5" target="_blank">https://sayingsofthesalaf-api.onrender.com/narration/5</a></li>
+        <li><a href="https://sayingsofthesalaf-api.onrender.com/names" target="_blank">https://sayingsofthesalaf-api.onrender.com/names</a></li>
+        <li><a href="https://sayingsofthesalaf-api.onrender.com/name/abul-jawza" target="_blank">https://sayingsofthesalaf-api.onrender.com/name/abul-jawza</a></li>
+        <li><a href="https://sayingsofthesalaf-api.onrender.com/topics" target="_blank">https://sayingsofthesalaf-api.onrender.com/topics</a></li>
+        <li><a href="https://sayingsofthesalaf-api.onrender.com/topic/advice" target="_blank">https://sayingsofthesalaf-api.onrender.com/topic/advice</a></li>
+      </ol>
+      <br>
+      <h2>Parameters:</h2>
+      <div class="ml-2"><strong>- int: id [1, 499] (Range for the ids of the narrations)</strong></div>
+      <div id="parameters">
+        <div class="table-responsive col-md-6">
+            <table class="table table-hover table-sm">
+                <thead class="thead-dark">
+                    <tr>
+                    <th>string: name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for name in names %}
+                    <tr>
+                        <td>/{{ decode_unicode(name) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="table-responsive col-md-6">
+            <table class="table table-hover table-sm flex flex-column">
+                <thead class="thead-dark">
+                    <tr>
+                    <th>string: topic</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for topic in topics %}
+                    <tr>
+                        <td>/{{ decode_unicode(topic) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+      </div>
+      <br>
+      <p>Author: Hamees Ul Hasan Sayed</p>
+      Source: <a href="https://www.github.com/hamees-sayed/sayingsofthesalaf_api" target="_blank">https://www.github.com/hamees-sayed/sayingsofthesalaf_api</a>
+</body>
+</html>
