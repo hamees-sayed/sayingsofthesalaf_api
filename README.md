@@ -1,1 +1,7 @@
-Scrape the narrations from the site https://www.sayingsofthesalaf.net/ and expose an api to fetch them. [WIP]
+Scrape the narrations from the site https://www.sayingsofthesalaf.net/ and expose an api to fetch them. 
+
+To run locally:
+1. `$ python3 -m venv venv`
+2. `$ source venv/bin/activate`
+3. `$ pip install -r requirements.txt`
+4. `$ flask --app app --debug run`
