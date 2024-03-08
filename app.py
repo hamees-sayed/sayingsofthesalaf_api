@@ -80,10 +80,14 @@ def categories():
 @app.route('/category/<string:category>')
 def category(category):
     categories_list = get_categories()
+    narrations = Narration.query.all()
     for cat in categories_list:
         if category == decode_unicode(cat):
-            narrations_json = [{"id": narration.id, "articles": narration.articles, 
-                                "categories": ast.literal_eval(narration.categories), "tags": ast.literal_eval(narration.tags)} for narration in narrations if cat in ast.literal_eval(narration.categories)]
+            narrations_json = [{"id": narration.id,
+                                "articles": narration.articles,
+                                "categories": ast.literal_eval(narration.categories),
+                                "tags": ast.literal_eval(narration.tags)}
+                                for narration in narrations if cat in ast.literal_eval(narration.categories)]
             return jsonify(narrations_json)
         
     return jsonify({"error": "Not Found"}), 404
@@ -98,13 +102,18 @@ def names():
 @app.route('/names/<string:name>')
 def salaf(name):
     name_list = get_names()
+    narrations = Narration.query.all()
     for narrator in name_list:
         if name == decode_unicode(narrator):
-            narrations_json = [{"id": narration.id, "articles": narration.articles, 
-                                "categories": ast.literal_eval(narration.categories), "tags": ast.literal_eval(narration.tags)} for narration in narrations if narrator in ast.literal_eval(narration.tags)]
+            narrations_json = [{"id": narration.id,
+                                "articles": narration.articles,
+                                "categories": ast.literal_eval(narration.categories),
+                                "tags": ast.literal_eval(narration.tags)}
+                               for narration in narrations if narrator in ast.literal_eval(narration.tags)]
             return jsonify(narrations_json)
         
     return jsonify({"error": "Not Found"}), 404
+
 
     
 # Run the app
