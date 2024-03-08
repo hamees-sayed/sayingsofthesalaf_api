@@ -63,7 +63,7 @@ def narrations():
     return jsonify(narrations_json)
 
 # Get a specific narration by id
-@app.route('/<int:id>')
+@app.route('/<int:id>', strict_slashes=False)
 def athar(id):
     narration = Narration.query.get_or_404(id)
     narration_json = {"id": narration.id, "articles": narration.articles, 
@@ -71,13 +71,13 @@ def athar(id):
     return jsonify(narration_json)
 
 # Get all categories
-@app.route('/category')
+@app.route('/topics', strict_slashes=False)
 def categories():
     categories = get_categories()
     return categories
 
 # Get a specific category by name
-@app.route('/category/<string:category>')
+@app.route('/topic/<string:category>', strict_slashes=False)
 def category(category):
     categories_list = get_categories()
     narrations = Narration.query.all()
@@ -93,13 +93,13 @@ def category(category):
     return jsonify({"error": "Not Found"}), 404
 
 # Get all narrators
-@app.route('/names')
+@app.route('/names', strict_slashes=False)
 def names():
     names = get_names()
     return names
 
 # Get narratios by a specific narrator by name
-@app.route('/names/<string:name>')
+@app.route('/name/<string:name>', strict_slashes=False)
 def salaf(name):
     name_list = get_names()
     narrations = Narration.query.all()
