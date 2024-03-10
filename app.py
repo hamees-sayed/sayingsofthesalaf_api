@@ -65,7 +65,7 @@ def home():
 @app.route('/narrations', strict_slashes=False)
 def narrations():
     narrations = Narration.query.all()
-    narrations_json = [{"id": narration.id, "articles": narration.articles, 
+    narrations_json = [{"id": narration.id, "title": narration.title, "articles": narration.articles, 
                         "categories": ast.literal_eval(narration.categories), "tags": ast.literal_eval(narration.tags)} for narration in narrations]
     return jsonify(narrations_json)
 
@@ -73,8 +73,11 @@ def narrations():
 @app.route('/narration/<int:id>', strict_slashes=False)
 def athar(id):
     narration = Narration.query.get_or_404(id)
-    narration_json = {"id": narration.id, "articles": narration.articles, 
-                      "categories": ast.literal_eval(narration.categories), "tags": ast.literal_eval(narration.tags)}
+    narration_json = {"id": narration.id, 
+                      "title": narration.title, 
+                      "articles": narration.articles, 
+                      "categories": ast.literal_eval(narration.categories), 
+                      "tags": ast.literal_eval(narration.tags)}
     return jsonify(narration_json)
 
 # Get all categories
@@ -91,6 +94,7 @@ def category(category):
     for cat in categories_list:
         if category == decode_unicode(cat):
             narrations_json = [{"id": narration.id,
+                                "title": narration.title,
                                 "articles": narration.articles,
                                 "categories": ast.literal_eval(narration.categories),
                                 "tags": ast.literal_eval(narration.tags)}
@@ -113,6 +117,7 @@ def salaf(name):
     for narrator in name_list:
         if name == decode_unicode(narrator):
             narrations_json = [{"id": narration.id,
+                                "title": narration.title,
                                 "articles": narration.articles,
                                 "categories": ast.literal_eval(narration.categories),
                                 "tags": ast.literal_eval(narration.tags)}
