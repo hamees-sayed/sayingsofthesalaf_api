@@ -1,7 +1,7 @@
 import os
 import ast
 import unicodedata
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 
 
@@ -125,6 +125,35 @@ def salaf(name):
             return jsonify(narrations_json)
         
     return jsonify({"error": "Not Found"}), 404
+    
+@app.route("/search")
+def search():
+    search_term = request.args.get('q')
+    
+    if not search_term:
+        return jsonify({'error': 'No search query provided'}), 400
+
+    query = f"%{search_term}%"
+
+    narrations = Narration.query.filter(
+        (Narration.title.ilike(query)) |
+        (Narration.articles.ilike(query)) |
+        (Narration.tags.ilike(query)) |
+        (Narration.categories.ilike(query))
+    ).all()
+
+    results = []
+    for narration in narrations:
+        serialized_narration = {
+            "id": narration.id,
+            "title": narration.title,
+            "articles": narration.articles,
+            "categories": ast.literal_eval(narration.categories),
+            "tags": ast.literal_eval(narration.tags)
+        }
+        results.append(serialized_narration)
+
+    return jsonify(results)
 
 
     
